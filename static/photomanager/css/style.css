@@ -1,0 +1,20 @@
+body {
+    background: white url("images/background.jpg") no-repeat; /* white for the font color */
+    background-size: 100%;
+}
+.center {
+    position: absolute;
+    background-color: white;
+    width: 500px;
+    height: 300px;
+    top: 33%;
+    left: 33%;
+    margin-left: -50px; /* margin is -0.5 * dimension */
+    margin-top: -25px; 
+}​
+
+.garbage {
+    width:200px;
+    height: 500px;
+
+}

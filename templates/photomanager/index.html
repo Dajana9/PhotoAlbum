@@ -1,0 +1,25 @@
+{% extends 'photomanager/base.html' %}
+
+<body>
+{% block main_content%}
+	    
+
+<div class="center">
+	<form action="{% url 'photomanager:create_album' %}" method="post">
+	{% csrf_token %}
+
+		<label >Select page size: </label><br><br>
+		<label for="width"> Width:</label>
+        <input type="text" id="width" name="width"><br><br>
+        <label for="height"> Height:</label>
+        <input type="text" id="height" name="height"><br><br>
+		<input type="submit" value="OK">
+	</form>
+</div>
+
+{% endblock %}
+</body>
+
+
+
+

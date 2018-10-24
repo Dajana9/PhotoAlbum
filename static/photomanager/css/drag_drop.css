@@ -1,0 +1,85 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background: white url("images/background.jpg") no-repeat; /* white for the font color */
+  background-size: 100%;
+}
+
+a {
+  color: #00B7FF;
+}
+
+#container{
+	position: relative;
+	background-color: white;
+	margin-right: auto;
+	margin-left: auto;
+	border: 3px solid black;
+}
+
+.garbage {
+    width:20%;
+    height: 60%;
+	background: white url("images/garbage.jpg") no-repeat;
+	float:left;
+}
+.garbage.resize{
+	width: 10px;
+	height: 100%;
+}
+
+.font_size{
+	padding: 50px;
+	font: bold 30px "Lucida Grande", Helvetica, Arial, sans-serif;
+
+}
+/*
+#container{
+	position: absolute;
+	right: 10%;
+	background-color: white;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	overflow: hidden;
+	touch-action: none;
+	z-index: -1
+}
+
+.preview {
+	display: aut;
+	grid-template-columns: 1fr 1fr 1fr;
+	grid-gap: 1px;
+	align-items: center;
+	justify-items: center;
+  
+}
+*/
+
+.preview {
+}
+
+.preview img {
+  width: 150px;
+  height: auto;
+  padding: 2px;
+  touch-action: none;
+
+}
+
+.item {
+  border-radius: 50%;
+  touch-action: none;
+  user-select: none;
+  position: absolute;
+  z-index: 0;
+}
+/*
+.preview img:active {
+  opacity: .75;
+}
+*/
+
+.hovered{
+	border: 3px solid yellow;
+}
