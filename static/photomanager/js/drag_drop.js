@@ -3,7 +3,6 @@ console.log('test')
 const fileUpload = document.querySelector('.js-image-upload')
 const imagePreview = document.querySelector('.js-preview')
 const container = document.querySelector("#container");
-const garbage = document.querySelector('.garbage')
 
 var activeItem = null;
 var image_rotation = 0 
@@ -23,10 +22,11 @@ function add_image(event) {
     counter++;
     image.id = counter;
     imagePreview.append(image);
-    
-    setTranslate(getRndInteger(-100,100), getRndInteger(-50,50), image);
-    image.rotate = getRndInteger(0,50)
-    setRotate(image.rotate, image);
+    image.xOffset = getRndInteger(-100,100)
+    image.yOffset = getRndInteger(-50,50)
+    image.rotate = getRndInteger(0,50);
+    image.scale = 1;
+    setTranslate(image);
 
     image.addEventListener("mousedown", dragStart, false);
     image.addEventListener("mouseup", dragEnd, false);
@@ -42,20 +42,41 @@ function getRndInteger(min, max) {
 
 function onMouseoutImage(e){
   e.target.classList.remove("hovered");
+  window.removeEventListener("keydown", keyDown, false);
+
+}
+
+function keyDown(e,activeItem){
+  var key = e.keyCode || e.charCode;
+  if (flag === 0 && activeItem) {
+    if (key == '82'){
+      activeItem.rotate += 10;
+      setTranslate(activeItem);
+    }
+    if (key == '87'){
+      activeItem.rotate -= 10;
+      setTranslate(activeItem);
+    }
+    if (key == '107'){
+      activeItem.scale += 0.1;
+      setTranslate(activeItem);
+    }
+    if (key == '109'){
+      activeItem.scale -= 0.1;
+      setTranslate(activeItem);
+    }
+    if (key == '46'){
+      deleteImage(activeItem);
+    }
+  }
 }
 
 function onMouseoverImage(e) {
   activeItem = e.target;
   e.target.classList.add("hovered");
-  if (flag === 0 && activeItem) {
-    if (e.shiftKey){
-      image_rotation += e.deltaY
-      activeItem.style.transform = "rotate("+image_rotation+"deg)";
-    }
-    if (e.altKey){
-      image_rotation += e.deltaY
-      activeItem.style.transform = "scale("+image_rotation+"px)";
-    }
+  console.log('mouseover', activeItem);
+  window.onkeydown = function(event) {
+    keyDown(event,activeItem);
   }
 }
 
@@ -76,7 +97,7 @@ function dragStart(e) {
       return false;
     };
     activeItem.onmousemove = function(e) {
-        drag(e)
+        drag(e);
      }
   }
 }
@@ -84,49 +105,38 @@ function dragStart(e) {
 function dragEnd(e) {
   flag = 0
   if (activeItem){
-  activeItem.initialX = activeItem.currentX;
-  activeItem.initialY = activeItem.currentY;
-  //check if it is overflowen and than +1
-  isOverflown(activeItem);  
-  helper = activeItem;
-
-  garbage.onmouseover = function(e,helper){
-    deleteImage(e,helper);
-  }
-  activeItem.onmousemove = null
-  activeItem = null;
-  active = false;
+    activeItem.initialX = activeItem.currentX;
+    activeItem.initialY = activeItem.currentY;
+    //check if it is overflowen and than +1
+    isOverflown(activeItem);  
+    active = false;
   }
 
 }
 
 function drag(e) {
   if (active){
-  activeItem.currentX = e.clientX - activeItem.initialX;
-  activeItem.currentY = e.clientY - activeItem.initialY;
+    activeItem.currentX = e.clientX - activeItem.initialX;
+    activeItem.currentY = e.clientY - activeItem.initialY;
 
-  activeItem.xOffset = activeItem.currentX;
-  activeItem.yOffset = activeItem.currentY;
+    activeItem.xOffset = activeItem.currentX;
+    activeItem.yOffset = activeItem.currentY;
 
-  setTranslate(activeItem.xOffset, activeItem.yOffset, activeItem);
+    setTranslate(activeItem);
   }
 }
 
-function setTranslate(xPos, yPos, e) {
-  e.style.transform = "translate3d(" + xPos + "px, " + yPos + "px, 0)";
+function setTranslate(e) {
+  e.style.transform = "translate3d(" + e.xOffset + "px, " + e.yOffset + "px, 0)";
   e.style.transform += "rotate(" + e.rotate +"deg)";
-}
-
-function setRotate(degree, e) {
-  e.style.transform += "rotate(" + degree +"deg)";
+  e.style.transform += "scale(" + e.scale +")";
 }
 
 function isOverflown(e) {
   e.style.zIndex += 1
 }
 
-function deleteImage(e, activeItem) {
-  console.log('delete');
-  var img_del = document.getElementById(activeItem.id);
+function deleteImage(e) {
+  var img_del = document.getElementById(e.id);
   img_del.parentNode.removeChild(img_del);
 }
