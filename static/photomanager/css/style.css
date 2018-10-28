@@ -12,9 +12,3 @@ body {
     margin-left: -50px; /* margin is -0.5 * dimension */
     margin-top: -25px; 
 }​
-
-.garbage {
-    width:200px;
-    height: 500px;
-
-}

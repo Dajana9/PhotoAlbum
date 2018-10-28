@@ -10,7 +10,7 @@ a {
 }
 
 #container{
-	position: relative;
+	position: absolute;
 	background-color: white;
 	margin-right: auto;
 	margin-left: auto;
@@ -33,6 +33,7 @@ a {
 	font: bold 30px "Lucida Grande", Helvetica, Arial, sans-serif;
 
 }
+
 /*
 #container{
 	position: absolute;
@@ -60,6 +61,7 @@ a {
 }
 
 .preview img {
+  position: absolute;
   width: 150px;
   height: auto;
   padding: 2px;

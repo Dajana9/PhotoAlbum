@@ -2,19 +2,41 @@
 
 <link rel="stylesheet" type="text/css" href="{% static 'photomanager/css/drag_drop.css' %}">
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
+
+
+<h1>Hey, position pictures inside the box, and when done click save</h1>
+
+
+<button id="clickbind" href="#">Click</button>
+
+<button id="save-button" onclick="onSaveClick()">Save</button> 
+
+<span id="text">
+<h2>For rotation use: 'W' and 'R' </h2>
+<h2>For resizing use: '+' and '-' </h2>
+<h2>For delete use.... well...delete :D </h2><br>
+
+</span>
+
 <form>
   <input class='js-image-upload' type='file' accept="image/*" multiple>
 </form>
 
 
-<span id="garbage" class="garbage">
-</span>
 
-<div id="container" style="height:{{height}};width:{{width}};" </div>
+<div id="container" style="height:{{height}};width:{{width}};"> 
+
 <div class='preview js-preview'>
-<div contenteditable="true" draggable="true" class="font_size">
-  This text can be edited by the user.
+	<div contenteditable="true" draggable="true" class="font_size">
+	  This text can be edited by the user.
+	</div>
 </div>
+
 </div>
+
+
 <script type="text/javascript" src="{% static 'photomanager/js/drag_drop.js' %}"></script>
+
+<script type="text/javascript" src="{% static 'photomanager/js/export_pdf.js' %}"></script>
 

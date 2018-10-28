@@ -3,6 +3,7 @@ console.log('test')
 const fileUpload = document.querySelector('.js-image-upload')
 const imagePreview = document.querySelector('.js-preview')
 const container = document.querySelector("#container");
+const saveButton = document.querySelector('#save-button')
 
 var activeItem = null;
 var image_rotation = 0 
@@ -29,7 +30,7 @@ function add_image(event) {
     setTranslate(image);
 
     image.addEventListener("mousedown", dragStart, false);
-    image.addEventListener("mouseup", dragEnd, false);
+    window.addEventListener("mouseup", dragEnd, false);
     image.addEventListener("mouseover", onMouseoverImage);
     image.addEventListener("mouseout", onMouseoutImage);
   }
@@ -57,11 +58,11 @@ function keyDown(e,activeItem){
       activeItem.rotate -= 10;
       setTranslate(activeItem);
     }
-    if (key == '107'){
+    if (key == '107' || key == '171'){
       activeItem.scale += 0.1;
       setTranslate(activeItem);
     }
-    if (key == '109'){
+    if (key == '109' || key == '173'){
       activeItem.scale -= 0.1;
       setTranslate(activeItem);
     }
@@ -74,35 +75,36 @@ function keyDown(e,activeItem){
 function onMouseoverImage(e) {
   activeItem = e.target;
   e.target.classList.add("hovered");
-  console.log('mouseover', activeItem);
   window.onkeydown = function(event) {
     keyDown(event,activeItem);
   }
 }
 
 function dragStart(e) {
-  flag = 1
+  console.log('DragStart', container);
+  flag = 1;
   active = true;
   activeItem = e.target;
-  if (activeItem){
-    if (!activeItem.xOffset) {
-      activeItem.xOffset = 0;
-    }
-    if (!activeItem.yOffset) {
-      activeItem.yOffset = 0;
-    }       
-    activeItem.initialX = e.clientX - activeItem.xOffset;
-    activeItem.initialY = e.clientY - activeItem.yOffset;
-    activeItem.ondragstart = function(e) {
-      return false;
-    };
-    activeItem.onmousemove = function(e) {
-        drag(e);
-     }
+
+  if (!activeItem.xOffset) {
+    activeItem.xOffset = 0;
   }
+  if (!activeItem.yOffset) {
+    activeItem.yOffset = 0;
+  }       
+  activeItem.initialX = e.clientX - activeItem.xOffset;
+  activeItem.initialY = e.clientY - activeItem.yOffset;
+
+  activeItem.addEventListener("mousemove", drag);
+
+  activeItem.ondragstart = function(e) {
+    return false;
+  };
+
 }
 
 function dragEnd(e) {
+  activeItem.removeEventListener("mousemove", drag);
   flag = 0
   if (activeItem){
     activeItem.initialX = activeItem.currentX;
@@ -115,6 +117,7 @@ function dragEnd(e) {
 }
 
 function drag(e) {
+  console.log("Drag",active);
   if (active){
     activeItem.currentX = e.clientX - activeItem.initialX;
     activeItem.currentY = e.clientY - activeItem.initialY;
@@ -140,3 +143,11 @@ function deleteImage(e) {
   var img_del = document.getElementById(e.id);
   img_del.parentNode.removeChild(img_del);
 }
+
+if (saveButton) {
+  saveButton.addEventListener('click', onSaveClick())
+}
+
+function onSaveClick() {
+  console.log("save")
+  }
